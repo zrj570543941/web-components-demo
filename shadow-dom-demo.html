@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        customElements.define('fancy-tabs', class extends HTMLElement {
+            constructor() {
+                super(); // always call super() first in the ctor.
+
+                // Attach a shadow root to <fancy-tabs>.
+                const shadowRoot = this.attachShadow({mode: 'open'});
+                shadowRoot.innerHTML = `
+                <style>#tabs {  }</style> <!-- styles are scoped to fancy-tabs! -->
+                <slot></slot>
+                <slot name="title"></slot>
+                <div id="tabs">111</div>
+                <slot name="title"></slot>
+                `;
+            }
+        
+        });
+
+    </script>
+</head>
+<body>
+<!-- 下面的三个h2元素将在组件shadow dom内部的<slot name="title"></slot>上渲染，
+下面的几个section将代替shadow dom内部的第一个出现的没有定义name属性的slot上渲染
+这个slot就是default slot -->
+<fancy-tabs>
+    <h2 slot="title">Title</h2>
+    <section>content panel 1</section>
+    <h2 slot="title" selected>Title 2</h2>
+    <section>content panel 2</section>
+    <h2 slot="title">Title 3</h2>
+    <section>content panel 3</section>
+</fancy-tabs>
+</body>
+</html>
